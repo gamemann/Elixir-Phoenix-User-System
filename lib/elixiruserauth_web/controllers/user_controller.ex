@@ -11,9 +11,10 @@ defmodule ElixiruserauthWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     case Accounts.create_user(user_params) do
-      {:ok, _user} ->
+      {:ok, user} ->
         conn
-        |> put_flash(:info, "User created successfully.")
+        |> put_session(:current_user_id, user.id)
+        |> put_flash(:info, "Registered successfully.")
         |> redirect(to: "/")
 
       {:error, %Ecto.Changeset{} = changeset} ->
