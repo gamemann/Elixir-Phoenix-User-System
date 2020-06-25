@@ -15,12 +15,21 @@ defmodule Elixiruserauth.Accounts.User do
     timestamps()
   end
 
+  @spec changeset(
+          {map, map} | %{:__struct__ => atom | %{__changeset__: map}, optional(atom) => any},
+          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
+        ) :: nil | Ecto.Changeset.t()
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :epassword, :email])
-    |> validate_required([:username, :epassword, :email])
-    |> hashPassword()
+    |> cast(attrs, [:username, :password])
+    |> validate_required([:username])
+    |> validate_length(:password, min: 6)
+    |> validate_confirmation(:password)
+    |> validate_format(:username, ~r/^[a-z0-9][a-z0-9]+[a-z0-9]$/i)
+    |> validate_length(:username, min: 3)
+    |> unique_constraint(:username)
+    |> hashPassword
   end
 
   defp hashPassword(changeset) do
@@ -29,6 +38,8 @@ defmodule Elixiruserauth.Accounts.User do
     if password do
       hashed_pass = add_hash(password)
       put_change(changeset, :epassword, hashed_pass)
+    else
+      changeset
     end
   end
 end
