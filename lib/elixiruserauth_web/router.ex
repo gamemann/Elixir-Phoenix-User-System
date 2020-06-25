@@ -14,7 +14,17 @@ defmodule ElixiruserauthWeb.Router do
   end
 
   scope "/", ElixiruserauthWeb do
-    pipe_through :browser
+    pipe_through [:browser, ElixiruserauthWeb.Plugs.NotUser]
+
+    resources "/users", UserController, only: [:create, :new, :edit]
+    get "login", SessionController, :new
+    post "login", SessionController, :create
+  end
+
+  scope "/", ElixiruserauthWeb do
+    pipe_through [:browser, ElixiruserauthWeb.Plugs.User]
+
+    delete "/logout", SessionController, :delete
 
     get "/", PageController, :index
   end
