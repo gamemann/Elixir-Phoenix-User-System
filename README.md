@@ -2,6 +2,8 @@
 ## Description
 A Phoenix web application that allows users to register and login. I'm making this application to practice Elixir, a functional programming language I'm learning.
 
+This project uses [Argon2](https://hexdocs.pm/argon2_elixir/Argon2.html) for password hashing.
+
 ## Installation
 1. Install a PostgreSQL server.
 
