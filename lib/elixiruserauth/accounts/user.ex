@@ -36,7 +36,7 @@ defmodule Elixiruserauth.Accounts.User do
     password = get_change(changeset, :password)
 
     if password do
-      hashed_pass = add_hash(password)
+      hashed_pass = add_hash(password).password_hash
       put_change(changeset, :epassword, hashed_pass)
     else
       changeset
