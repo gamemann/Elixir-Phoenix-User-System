@@ -1,0 +1,20 @@
+<div class='row'>
+    <div class='col s12 m6 offset-m3'>
+        <div class='card'>
+            <div class='card-content'>
+                <span class='card-title'>Login</span>
+
+                <div class='row card-form'>
+                    <%= form_for @conn, Routes.session_path(@conn, :new), [as: :session], fn f -> %>
+                        <%= text_input f, :username, placeholder: "Username..." %>
+                        <%= password_input f, :password, placeholder: "Password..." %>
+                
+                        <%= submit "Login", class: "btn right secondary-color" %>
+                        
+                        <%= link "Register", to: Routes.user_path(@conn, :new), class: "btn secondary-color" %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
