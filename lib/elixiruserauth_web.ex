@@ -39,6 +39,9 @@ defmodule ElixiruserauthWeb do
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
+
+      # Import signed in.
+      import Elixiruserauth.Accounts.Auth, only: [signed_in?: 1]
     end
   end
 
