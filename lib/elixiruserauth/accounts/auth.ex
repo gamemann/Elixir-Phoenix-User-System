@@ -14,7 +14,11 @@ defmodule Elixiruserauth.Accounts.Auth do
 
   defp authenticate?(user, password) do
     if user do
-      check_pass(user, password, [hash_key: :epassword])
+      case check_pass(user, password, [hash_key: :epassword]) do
+        {:error, _} -> false
+
+        _ -> true
+      end
     else
       false
     end
